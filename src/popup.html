@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FormVoice</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 260px;
+      font-family: system-ui, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0ff;
+      padding: 20px;
+    }
+    h1 { font-size: 16px; margin-bottom: 4px; color: #fff; }
+    p { font-size: 12px; color: #9898cc; margin-bottom: 16px; }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #4a4aff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    button:hover { background: #6060ff; }
+    .settings-link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 11px;
+      color: #6666aa;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    #status {
+      font-size: 11px;
+      text-align: center;
+      margin-top: 10px;
+      color: #88aaff;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎙️ FormVoice</h1>
+  <p>Accessible form assistant for visually impaired users.</p>
+
+  <button id="startBtn">
+    <span>▶</span> Start Form Assistant
+  </button>
+
+  <div id="status"></div>
+  <a class="settings-link" id="settingsLink">⚙ Configure API Keys</a>
+
+  <script src="popup.js"></script>
+</body>
+</html>

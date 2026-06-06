@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FormVoice – Settings</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 32px auto; padding: 0 20px 40px; color: #222; background: #f7f8fc; }
+
+    h2 { font-size: 18px; margin-bottom: 4px; color: #111; }
+    .subtitle { font-size: 12px; color: #888; margin-bottom: 24px; }
+
+    /* Tabs */
+    .tabs { display: flex; border-bottom: 2px solid #e0e0f0; margin-bottom: 24px; }
+    .tab {
+      padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+      color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab.active { color: #4a4aff; border-bottom-color: #4a4aff; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Sections */
+    .section { margin: 20px 0 8px; font-weight: 700; font-size: 11px; color: #4a4aff; text-transform: uppercase; letter-spacing: 0.06em; }
+    label { display: block; font-size: 13px; margin-bottom: 4px; color: #444; }
+    input, select {
+      width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px;
+      margin-bottom: 14px; font-size: 13px; background: #fff;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus { outline: none; border-color: #4a4aff; box-shadow: 0 0 0 3px rgba(74,74,255,0.1); }
+
+    /* Profile grid */
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .field-grid .full { grid-column: 1 / -1; }
+
+    /* Buttons */
+    .btn-row { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+    button {
+      padding: 9px 20px; background: #4a4aff; color: white;
+      border: none; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: background 0.15s;
+    }
+    button:hover { background: #3333dd; }
+    button:disabled { background: #aaa; cursor: not-allowed; }
+    button.secondary {
+      background: transparent; color: #4a4aff; border: 1px solid #4a4aff;
+    }
+    button.secondary:hover { background: #f0f0ff; }
+
+    /* Status messages */
+    .status { font-size: 12px; }
+    .status.ok { color: #2e7d32; }
+    .status.err { color: #c62828; }
+    .status.info { color: #888; }
+
+    /* Profile status banner */
+    #profileStatus {
+      padding: 10px 14px; border-radius: 8px; font-size: 12px;
+      margin-bottom: 16px; display: none;
+    }
+    #profileStatus.ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; display: block; }
+    #profileStatus.err { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; display: block; }
+    #profileStatus.info { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; display: block; }
+  </style>
+</head>
+<body>
+  <h2>⚙️ FormVoice Settings</h2>
+  <p class="subtitle">Configure your profile and API connections.</p>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="profile">👤 My Profile</div>
+    <div class="tab" data-tab="api">🔑 API Keys</div>
+  </div>
+
+  <!-- ── PROFILE TAB ── -->
+  <div class="tab-panel active" id="tab-profile">
+    <div id="profileStatus"></div>
+
+    <div class="section">Personal Info</div>
+    <div class="field-grid">
+      <div>
+        <label for="p_name">Full Name</label>
+        <input id="p_name" placeholder="Jane Doe" />
+      </div>
+      <div>
+        <label for="p_dob">Date of Birth</label>
+        <input id="p_dob" type="date" />
+      </div>
+      <div>
+        <label for="p_email">Email Address</label>
+        <input id="p_email" type="email" placeholder="jane@example.com" />
+      </div>
+      <div>
+        <label for="p_phone">Phone Number</label>
+        <input id="p_phone" type="tel" placeholder="+1-555-0100" />
+      </div>
+      <div class="full">
+        <label for="p_address">Street Address</label>
+        <input id="p_address" placeholder="123 Main St" />
+      </div>
+      <div>
+        <label for="p_city">City</label>
+        <input id="p_city" placeholder="Springfield" />
+      </div>
+      <div>
+        <label for="p_state">State / Region</label>
+        <input id="p_state" placeholder="IL" />
+      </div>
+      <div>
+        <label for="p_zip">ZIP / Postal Code</label>
+        <input id="p_zip" placeholder="62701" />
+      </div>
+      <div>
+        <label for="p_country">Country</label>
+        <input id="p_country" placeholder="United States" />
+      </div>
+      <div>
+        <label for="p_gender">Gender (optional)</label>
+        <select id="p_gender">
+          <option value="">— prefer not to say —</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Non-binary">Non-binary</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="loadProfileBtn" class="secondary">↓ Load from Qdrant</button>
+      <button id="saveProfileBtn">↑ Save to Qdrant</button>
+      <span class="status" id="profileSaveStatus"></span>
+    </div>
+  </div>
+
+  <!-- ── API KEYS TAB ── -->
+  <div class="tab-panel" id="tab-api">
+    <div class="section">🧠 Omi (Wearable Memories)</div>
+    <label for="omiKey">Omi API Key</label>
+    <input id="omiKey" type="password" placeholder="omi_dev_your_key_here" />
+
+    <div class="section">🗄️ Qdrant (Profile Storage)</div>
+    <label for="qdrantUrl">Qdrant Cluster URL</label>
+    <input id="qdrantUrl" placeholder="https://your-cluster.qdrant.io" />
+    <label for="qdrantKey">Qdrant API Key</label>
+    <input id="qdrantKey" type="password" placeholder="Your Qdrant API Key" />
+    <label for="qdrantCollection">Collection Name</label>
+    <input id="qdrantCollection" placeholder="user_profile" />
+
+    <div class="section">🤖 Lyzr (AI Agent)</div>
+    <label for="lyzrKey">Lyzr API Key</label>
+    <input id="lyzrKey" type="password" placeholder="Your Lyzr API Key" />
+    <label for="lyzrAgentId">Lyzr Agent ID</label>
+    <input id="lyzrAgentId" placeholder="Your Lyzr Agent ID" />
+
+    <div class="btn-row">
+      <button id="saveApiBtn">Save API Keys</button>
+      <span class="status ok" id="apiSaveStatus"></span>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

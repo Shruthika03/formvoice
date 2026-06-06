@@ -1,0 +1,62 @@
+/* FormVoice Assistant Overlay */
+#fva-overlay {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999999;
+  background: #1a1a2e;
+  color: #e0e0ff;
+  border-radius: 16px;
+  padding: 18px 24px;
+  min-width: 240px;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  font-family: system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  border: 1px solid #4a4aff44;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+#fva-overlay.fva-visible {
+  display: flex;
+}
+
+.fva-icon {
+  font-size: 28px;
+  animation: fva-pulse 1.2s infinite;
+}
+
+.fva-msg {
+  font-size: 14px;
+  color: #c8c8ff;
+}
+
+.fva-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #4a4aff33;
+  border-top-color: #6e6eff;
+  border-radius: 50%;
+  animation: fva-spin 0.8s linear infinite;
+}
+
+@keyframes fva-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fva-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Highlight autofilled fields */
+.fva-filled {
+  outline: 2px solid #6e6eff !important;
+  background: #f0f0ff !important;
+  transition: background 0.3s;
+}

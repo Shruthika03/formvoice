@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "FormVoice – Accessible Form Assistant",
+  "version": "1.0.0",
+  "description": "Helps visually impaired users fill forms using voice and saved profile data.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "microphone"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"],
+      "css": ["src/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_page": "src/options.html"
+}
